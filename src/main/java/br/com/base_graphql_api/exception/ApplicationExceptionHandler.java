@@ -1,6 +1,5 @@
 package br.com.base_graphql_api.exception;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -9,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,9 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
@@ -36,32 +32,6 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                         .details(List.of(ex.getMessage()))
                         .developerMessage(ex.getClass().getName())
                         .build(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(BadCredentialsException.class)
-    protected ResponseEntity<Object> handleBadCredentialsException(BadCredentialsException ex, WebRequest request) {
-        return new ResponseEntity<>(
-                ApplicationExceptionDetails.builder()
-                        .timestamp(LocalDateTime.now())
-                        .status(HttpStatus.UNAUTHORIZED.value())
-                        .title(HttpStatus.UNAUTHORIZED.getReasonPhrase())
-                        .details(List.of("Credenciais inválidas"))
-                        .developerMessage(ex.getClass().getName())
-                        .build(),
-                HttpStatus.UNAUTHORIZED
-        );
-    }
-
-    @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<Object> handleExpiredJwtException(ExpiredJwtException ex, WebRequest request) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("title", "Token expirado");
-        body.put("status", HttpStatus.UNAUTHORIZED.value());
-        body.put("details", List.of(ex.getMessage()));
-        body.put("developerMessage", ex.getClass().getName());
-        body.put("timestamp", LocalDateTime.now());
-
-        return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
     }
 
     @Override

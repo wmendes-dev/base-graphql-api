@@ -1,0 +1,31 @@
+type Filme {
+    idFilme: ID!
+    nome: String!
+    descricao: String!
+    genero: Genero!
+    situacao: String!
+}
+
+input FilmeRequest {
+    nome: String!
+    descricao: String!
+    idGenero: ID!
+    situacao: String!
+}
+
+type FilmeResponse {
+    idFilme: ID!
+    nome: String!
+    descricao: String!
+    genero: GeneroResponse!
+    situacao: String!
+}
+
+extend type Query {
+    pesquisarFilmes: [FilmeResponse!]!
+    obterFilme(idFilme: ID!): FilmeResponse!
+}
+
+extend type Mutation {
+    criarFilme(filmeRequest: FilmeRequest!): FilmeResponse!
+}

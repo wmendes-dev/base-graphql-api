@@ -1,0 +1,23 @@
+type Genero {
+  idGenero: ID!
+  nome: String!
+  situacao: String!
+}
+
+input GeneroRequest {
+  nome: String!
+}
+
+type GeneroResponse {
+  idGenero: ID!
+  nome: String!
+  situacao: String!
+}
+
+type Query {
+  obterGenero(idGenero: ID!): GeneroResponse!
+}
+
+type Mutation {
+  criarGenero(input: GeneroRequest!): GeneroResponse!
+}
