@@ -22,5 +22,6 @@ type Query {
 }
 
 type Mutation {
-  criarGenero(input: GeneroRequest!): GeneroResponse!
+  criarGenero(generoRequest: GeneroRequest!): GeneroResponse!
+  atualizarGenero(idGenero: ID!, input: GeneroRequest!): GeneroResponse!
 }

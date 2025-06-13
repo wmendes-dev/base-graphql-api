@@ -35,4 +35,5 @@ extend type Query {
 
 extend type Mutation {
     criarFilme(filmeRequest: FilmeRequest!): FilmeResponse!
+    atualizarFilme(idFilme: ID!, filmeRequest: FilmeRequest!): FilmeResponse!
 }

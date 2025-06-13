@@ -1,4 +1,4 @@
-package br.com.base_graphql_api.controller;
+package br.com.base_graphql_api.resolver;
 
 import br.com.base_graphql_api.domain.dto.request.GeneroRequest;
 import br.com.base_graphql_api.domain.dto.response.FilmePorGeneroResponse;
@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-public class GeneroController {
+public class GeneroResolver {
 
     private final GeneroService generoService;
 
@@ -36,6 +36,11 @@ public class GeneroController {
     @MutationMapping
     public GeneroResponse criarGenero(@Argument GeneroRequest generoRequest) {
         return this.generoService.criarGenero(generoRequest);
+    }
+
+    @MutationMapping
+    public GeneroResponse atualizarGenero(@Argument Long idGenero, @Argument GeneroRequest generoRequest) {
+        return this.generoService.atualizarGenero(idGenero, generoRequest);
     }
 
     @BatchMapping(field = "filmes")

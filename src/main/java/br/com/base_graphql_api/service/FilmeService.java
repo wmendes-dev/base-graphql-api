@@ -42,6 +42,14 @@ public class FilmeService {
         return this.filmeMapper.converterParaFilmeResponse(filme);
     }
 
+    @Transactional
+    public FilmeResponse atualizarFilme(Long idFilme, FilmeRequest filmeRequest) {
+        Filme filme = obterFilmePorId(idFilme);
+        this.filmeMapper.converterParaFilme(filme, filmeRequest);
+        filme = this.filmeRepository.save(filme);
+        return this.filmeMapper.converterParaFilmeResponse(filme);
+    }
+
     public Filme obterFilmePorId(Long idFilme) {
         return this.filmeRepository.findById(idFilme)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Filme não encontrado", idFilme));

@@ -37,6 +37,14 @@ public class GeneroService {
         return this.generoMapper.converterParaGeneroResponse(genero);
     }
 
+    @Transactional
+    public GeneroResponse atualizarGenero(Long idGenero, GeneroRequest generoRequest) {
+        Genero genero = obterGeneroPorId(idGenero);
+        this.generoMapper.converterParaGenero(genero, generoRequest);
+        genero = this.generoRepository.save(genero);
+        return this.generoMapper.converterParaGeneroResponse(genero);
+    }
+
     public Genero obterGeneroPorId(Long idGenero) {
         return this.generoRepository.findById(idGenero)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Gênero não encontrado", idGenero));

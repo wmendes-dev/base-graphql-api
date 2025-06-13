@@ -5,6 +5,7 @@ import br.com.base_graphql_api.domain.dto.response.GeneroResponse;
 import br.com.base_graphql_api.domain.entity.Genero;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface GeneroMapper {
@@ -13,5 +14,7 @@ public interface GeneroMapper {
     GeneroResponse converterParaGeneroResponse(Genero genero);
 
     Genero converterParaGenero(GeneroRequest generoRequest);
+
+    void converterParaGenero(@MappingTarget Genero genero, GeneroRequest generoRequest);
 
 }

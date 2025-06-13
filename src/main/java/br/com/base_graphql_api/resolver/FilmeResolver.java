@@ -1,5 +1,5 @@
 
-package br.com.base_graphql_api.controller;
+package br.com.base_graphql_api.resolver;
 
 import br.com.base_graphql_api.domain.dto.request.FilmeRequest;
 import br.com.base_graphql_api.domain.dto.response.FilmeResponse;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class FilmeController {
+public class FilmeResolver {
 
     private final FilmeService filmeService;
 
@@ -31,6 +31,11 @@ public class FilmeController {
     @MutationMapping
     public FilmeResponse criarFilme(@Argument FilmeRequest filmeRequest) {
         return this.filmeService.criarFilme(filmeRequest);
+    }
+
+    @MutationMapping
+    public FilmeResponse atualizarFilme(@Argument Long idFilme, @Argument FilmeRequest filmeRequest) {
+        return this.filmeService.atualizarFilme(idFilme, filmeRequest);
     }
 
 }
