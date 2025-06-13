@@ -2,13 +2,11 @@ package br.com.base_graphql_api.domain.dto.response;
 
 import br.com.base_graphql_api.domain.enums.SituacaoEnum;
 
-import java.util.List;
-
-public record GeneroResponse(
-        Long idGenero,
+public record SerieResponse(
+        Long idSerie,
         String nome,
-        List<FilmePorGeneroResponse> filmes,
-        List<SeriePorGeneroResponse> series,
+        String descricao,
+        GeneroResponse genero,
         SituacaoEnum situacao
 ) {
 }

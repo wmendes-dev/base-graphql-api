@@ -1,0 +1,39 @@
+type Serie {
+    idSerie: ID!
+    nome: String!
+    descricao: String!
+    genero: Genero!
+    situacao: String!
+}
+
+input SerieRequest {
+    nome: String!
+    descricao: String!
+    idGenero: ID!
+    situacao: String!
+}
+
+type SerieResponse {
+    idSerie: ID!
+    nome: String!
+    descricao: String!
+    genero: GeneroResponse!
+    situacao: String!
+}
+
+type SeriePorGeneroResponse {
+    idSerie: ID!
+    nome: String!
+    descricao: String!
+    situacao: String!
+}
+
+extend type Query {
+    pesquisarSeries: [SerieResponse!]!
+    obterSerie(idSerie: ID!): SerieResponse!
+}
+
+extend type Mutation {
+    criarSerie(serieRequest: SerieRequest!): SerieResponse!
+    atualizarSerie(idSerie: ID!, serieRequest: SerieRequest!): SerieResponse!
+}

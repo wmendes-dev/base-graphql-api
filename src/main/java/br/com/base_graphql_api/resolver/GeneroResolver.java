@@ -3,8 +3,10 @@ package br.com.base_graphql_api.resolver;
 import br.com.base_graphql_api.domain.dto.request.GeneroRequest;
 import br.com.base_graphql_api.domain.dto.response.FilmePorGeneroResponse;
 import br.com.base_graphql_api.domain.dto.response.GeneroResponse;
+import br.com.base_graphql_api.domain.dto.response.SeriePorGeneroResponse;
 import br.com.base_graphql_api.service.FilmeService;
 import br.com.base_graphql_api.service.GeneroService;
+import br.com.base_graphql_api.service.SerieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
@@ -22,6 +24,8 @@ public class GeneroResolver {
     private final GeneroService generoService;
 
     private final FilmeService filmeService;
+
+    private final SerieService serieService;
 
     @QueryMapping
     public List<GeneroResponse> pesquisarGeneros() {
@@ -46,6 +50,11 @@ public class GeneroResolver {
     @BatchMapping(field = "filmes")
     public Map<GeneroResponse, List<FilmePorGeneroResponse>> mapearFilmesPorGenero(List<GeneroResponse> generoResponseList) {
         return this.filmeService.mapearFilmesPorGenero(generoResponseList);
+    }
+
+    @BatchMapping(field = "series")
+    public Map<GeneroResponse, List<SeriePorGeneroResponse>> mapearSeriesPorGenero(List<GeneroResponse> generoResponseList) {
+        return this.serieService.mapearSeriesPorGenero(generoResponseList);
     }
 
 }

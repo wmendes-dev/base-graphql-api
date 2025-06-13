@@ -3,6 +3,7 @@ type Genero {
   nome: String!
   situacao: String!
   filmes: [Filme]
+  series: [Serie]
 }
 
 input GeneroRequest {
@@ -14,6 +15,7 @@ type GeneroResponse {
   nome: String!
   situacao: String!
   filmes: [FilmePorGeneroResponse]
+  series: [SeriePorGeneroResponse]
 }
 
 type Query {
