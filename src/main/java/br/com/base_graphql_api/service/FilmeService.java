@@ -1,7 +1,9 @@
 package br.com.base_graphql_api.service;
 
 import br.com.base_graphql_api.domain.dto.request.FilmeRequest;
+import br.com.base_graphql_api.domain.dto.response.FilmePorGeneroResponse;
 import br.com.base_graphql_api.domain.dto.response.FilmeResponse;
+import br.com.base_graphql_api.domain.dto.response.GeneroResponse;
 import br.com.base_graphql_api.domain.entity.Filme;
 import br.com.base_graphql_api.exception.EntidadeNaoEncontradaException;
 import br.com.base_graphql_api.mapper.FilmeMapper;
@@ -10,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +45,26 @@ public class FilmeService {
     public Filme obterFilmePorId(Long idFilme) {
         return this.filmeRepository.findById(idFilme)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Filme não encontrado", idFilme));
+    }
+
+    public Map<GeneroResponse, List<FilmePorGeneroResponse>> mapearFilmesPorGenero(List<GeneroResponse> generoResponseList) {
+        List<Long> idGeneroList = generoResponseList.stream()
+                .map(GeneroResponse::idGenero)
+                .toList();
+
+        List<Filme> filmeList = this.filmeRepository.findByGeneroIdGeneroIn(idGeneroList);
+
+        Map<Long, List<Filme>> filmeListPorIdGenero = filmeList.stream()
+                .collect(Collectors.groupingBy(f -> f.getGenero().getIdGenero()));
+
+        return generoResponseList.stream()
+                .collect(Collectors.toMap(
+                        genero -> genero,
+                        genero -> filmeListPorIdGenero.getOrDefault(genero.idGenero(), Collections.emptyList())
+                                .stream()
+                                .map(this.filmeMapper::converterParaFilmePorGeneroResponse)
+                                .toList()
+                ));
     }
 
 }

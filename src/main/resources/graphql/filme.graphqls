@@ -21,6 +21,13 @@ type FilmeResponse {
     situacao: String!
 }
 
+type FilmePorGeneroResponse {
+    idFilme: ID!
+    nome: String!
+    descricao: String!
+    situacao: String!
+}
+
 extend type Query {
     pesquisarFilmes: [FilmeResponse!]!
     obterFilme(idFilme: ID!): FilmeResponse!

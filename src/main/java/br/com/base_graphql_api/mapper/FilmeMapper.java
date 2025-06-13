@@ -1,6 +1,7 @@
 package br.com.base_graphql_api.mapper;
 
 import br.com.base_graphql_api.domain.dto.request.FilmeRequest;
+import br.com.base_graphql_api.domain.dto.response.FilmePorGeneroResponse;
 import br.com.base_graphql_api.domain.dto.response.FilmeResponse;
 import br.com.base_graphql_api.domain.entity.Filme;
 import br.com.base_graphql_api.domain.entity.Genero;
@@ -16,9 +17,9 @@ public abstract class FilmeMapper {
     @Autowired
     private GeneroService generoService;
 
-//    public abstract FilmePesquisaResponse converterParaFilmePesquisaResponse(Filme filme);
-
     public abstract FilmeResponse converterParaFilmeResponse(Filme filme);
+
+    public abstract FilmePorGeneroResponse converterParaFilmePorGeneroResponse(Filme filme);
 
     @Mapping(target = "genero", expression = "java(converterParaGenero(filmeRequest.idGenero()))")
     public abstract Filme converterParaFilme(FilmeRequest filmeRequest);

@@ -2,6 +2,7 @@ type Genero {
   idGenero: ID!
   nome: String!
   situacao: String!
+  filmes: [Filme]
 }
 
 input GeneroRequest {
@@ -12,9 +13,11 @@ type GeneroResponse {
   idGenero: ID!
   nome: String!
   situacao: String!
+  filmes: [FilmePorGeneroResponse]
 }
 
 type Query {
+  pesquisarGeneros: [GeneroResponse]!
   obterGenero(idGenero: ID!): GeneroResponse!
 }
 

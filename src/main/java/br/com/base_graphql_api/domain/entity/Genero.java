@@ -4,6 +4,8 @@ import br.com.base_graphql_api.domain.enums.SituacaoEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "TB_GENERO")
@@ -16,6 +18,9 @@ public class Genero {
 
     @Column(name = "NOME", nullable = false)
     private String nome;
+
+    @OneToMany(mappedBy = "genero")
+    private List<Filme> filmes;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "SITUACAO", nullable = false)

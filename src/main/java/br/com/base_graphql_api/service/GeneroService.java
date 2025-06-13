@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class GeneroService {
@@ -17,6 +19,11 @@ public class GeneroService {
     private final GeneroRepository generoRepository;
 
     private final GeneroMapper generoMapper;
+
+    public List<GeneroResponse> pesquisarGeneros() {
+        List<Genero> generoList = this.generoRepository.findAll();
+        return generoList.stream().map(this.generoMapper::converterParaGeneroResponse).toList();
+    }
 
     public GeneroResponse obterGenero(Long idGenero) {
         Genero genero = obterGeneroPorId(idGenero);
