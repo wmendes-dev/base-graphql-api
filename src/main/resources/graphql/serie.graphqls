@@ -10,22 +10,6 @@ input SerieRequest {
     nome: String!
     descricao: String!
     idGenero: ID!
-    temporadas: [TemporadaRequest]!
-    situacao: String!
-}
-
-input TemporadaRequest {
-    idTemporada: ID
-    numero: Int!
-    episodios: [EpisodioRequest]!
-    situacao: String!
-}
-
-input EpisodioRequest {
-    idEpisodio: ID
-    numero: Int!
-    nome: String!
-    descricao: String!
     situacao: String!
 }
 
@@ -34,6 +18,7 @@ type SerieResponse {
     nome: String!
     descricao: String!
     genero: GeneroResponse!
+    temporadas: [TemporadaResponse]
     situacao: String!
 }
 

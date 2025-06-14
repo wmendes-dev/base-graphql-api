@@ -1,8 +1,6 @@
 package br.com.base_graphql_api.service;
 
 import br.com.base_graphql_api.domain.dto.request.TemporadaRequest;
-import br.com.base_graphql_api.domain.dto.response.GeneroResponse;
-import br.com.base_graphql_api.domain.dto.response.TemporadaPorGeneroResponse;
 import br.com.base_graphql_api.domain.dto.response.TemporadaResponse;
 import br.com.base_graphql_api.domain.entity.Temporada;
 import br.com.base_graphql_api.exception.EntidadeNaoEncontradaException;
@@ -12,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,27 +47,7 @@ public class TemporadaService {
 
     public Temporada obterTemporadaPorId(Long idTemporada) {
         return this.temporadaRepository.findById(idTemporada)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Temporada não encontrado", idTemporada));
-    }
-
-    public Map<GeneroResponse, List<TemporadaPorGeneroResponse>> mapearTemporadasPorGenero(List<GeneroResponse> generoResponseList) {
-        List<Long> idGeneroList = generoResponseList.stream()
-                .map(GeneroResponse::idGenero)
-                .toList();
-
-        List<Temporada> temporadaList = this.temporadaRepository.findByGeneroIdGeneroIn(idGeneroList);
-
-        Map<Long, List<Temporada>> temporadaListPorIdGenero = temporadaList.stream()
-                .collect(Collectors.groupingBy(f -> f.getGenero().getIdGenero()));
-
-        return generoResponseList.stream()
-                .collect(Collectors.toMap(
-                        genero -> genero,
-                        genero -> temporadaListPorIdGenero.getOrDefault(genero.idGenero(), Collections.emptyList())
-                                .stream()
-                                .map(this.temporadaMapper::converterParaTemporadaPorGeneroResponse)
-                                .toList()
-                ));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Temporada não encontrada", idTemporada));
     }
 
 }

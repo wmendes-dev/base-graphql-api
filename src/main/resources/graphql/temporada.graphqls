@@ -1,0 +1,39 @@
+input TemporadaRequest {
+    numero: Int!
+    idSerie: ID!,
+    episodios: [EpisodioRequest]!
+    situacao: String!
+}
+
+input EpisodioRequest {
+    idEpisodio: ID
+    numero: Int!
+    nome: String!
+    descricao: String!
+    situacao: String!
+}
+
+type TemporadaResponse {
+    idTemporada: ID
+    numero: Int!
+    episodios: [EpisodioResponse]!
+    situacao: String!
+}
+
+type EpisodioResponse {
+    idEpisodio: ID
+    numero: Int!
+    nome: String!
+    descricao: String!
+    situacao: String!
+}
+
+extend type Query {
+    pesquisarTemporadas: [TemporadaResponse!]!
+    obterTemporada(idTemporada: ID!): TemporadaResponse!
+}
+
+extend type Mutation {
+    criarTemporada(temporadaRequest: TemporadaRequest!): TemporadaResponse!
+    atualizarTemporada(idTemporada: ID!, temporadaRequest: TemporadaRequest!): TemporadaResponse!
+}

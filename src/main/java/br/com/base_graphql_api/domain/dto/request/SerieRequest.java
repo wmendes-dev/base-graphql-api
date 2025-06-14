@@ -2,13 +2,10 @@ package br.com.base_graphql_api.domain.dto.request;
 
 import br.com.base_graphql_api.domain.enums.SituacaoEnum;
 
-import java.util.List;
-
 public record SerieRequest(
         String nome,
         String descricao,
         Long idGenero,
-        List<TemporadaRequest> temporadas,
         SituacaoEnum situacao
 ) {
 }
