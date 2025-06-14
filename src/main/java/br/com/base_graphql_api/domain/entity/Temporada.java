@@ -4,6 +4,8 @@ import br.com.base_graphql_api.domain.enums.SituacaoEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "TB_TEMPORADA")
@@ -20,6 +22,9 @@ public class Temporada {
     @ManyToOne
     @JoinColumn(name = "ID_SERIE", nullable = false)
     private Serie serie;
+
+    @OneToMany(mappedBy = "temporada", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Episodio> episodios;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "SITUACAO", nullable = false)

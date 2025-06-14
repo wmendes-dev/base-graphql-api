@@ -4,11 +4,10 @@ import br.com.base_graphql_api.domain.enums.SituacaoEnum;
 
 import java.util.List;
 
-public record SerieRequest(
-        String nome,
-        String descricao,
-        Long idGenero,
-        List<TemporadaRequest> temporadas,
+public record TemporadaRequest(
+        Long idTemporada,
+        Integer numero,
+        List<EpisodioRequest> episodios,
         SituacaoEnum situacao
 ) {
 }
